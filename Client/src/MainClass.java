@@ -1,6 +1,24 @@
+import java.awt.*;
+
+public class Board{
+	Client client;
+	void displayMatrix(int[] board) {
+		board = new int[]
+	}
+	void gameWon(int state);
+	Board(Client client, String name);
+	void start();
+	
+}
+
+public class Client{
+	void sendinput(int input);
+}
 
 
-public class MainClass{
+
+
+/*public class MainClass{
     public static void main(String[] args) {
         String Str;
         String subStr;
@@ -21,4 +39,4 @@ public class MainClass{
         }
         System.out.println();
     }
-}
+}*/
