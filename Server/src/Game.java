@@ -7,8 +7,6 @@ public class Game  {
     private boolean checkingAvailableMoves;
     static int highest;
     static int score;
-    private boolean merged;
-    private int value;
     private Tile[][] tiles;
 
 	   void addRandomTile() {
@@ -20,7 +18,7 @@ public class Game  {
 	            col = pos % 4;
 	        } while (tiles[row][col] != null);
 	        
-	        tiles[row][col] = new Tile(2);
+	        tiles[row][col] = new Tile();
 	    }
 	   void printmatrix() {
 			for(int i=0;i<4;i++)
@@ -138,8 +136,8 @@ class Tile {
     private boolean merged;
     private int value;
 
-    Tile(int val) {
-        value = val;
+    Tile() {
+        value = 2;
     }
 
     int getValue() {
@@ -156,7 +154,7 @@ class Tile {
 
     int mergeWith(Tile other) {
         if (canMergeWith(other)) {
-            value *= 2;
+            value = value * 2;
             merged = true;
             return value;
         }
