@@ -1,7 +1,7 @@
-import java.awt.*;
+import resources.*;
 
 public class MainClass{
-
+    
 }
 
 
