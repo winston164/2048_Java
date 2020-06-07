@@ -74,9 +74,9 @@ public class Game  {
                         return true;
 
                     int value = next.mergeWith(curr);
-                    if (value > highest)
+          /*          if (value > highest)
                         highest = value;
-                    score += value; 
+                    score += value; */ 
                     tiles[r][c] = null;
                     moved = true;                    
                     break;
