@@ -3,7 +3,7 @@ import java.awt.*;
 public class Board{
 	Client client;
 	void displayMatrix(int[] board) {
-		board = new int[]
+		board = new int[16];
 	}
 	void gameWon(int state);
 	Board(Client client, String name);
