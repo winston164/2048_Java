@@ -1,8 +1,10 @@
 package resources;
 import java.awt.*;
+import java.awt.event.*;
 import java.awt.image.*;
+import javax.swing.JPanel;
 
-public class Board implements Runnable{
+public class Board extends JPanel implements Runnable{
 
 	private Display display;
 	private Thread thread;
@@ -38,6 +40,7 @@ public class Board implements Runnable{
 		this.width = width;
 		this.height = height;
 		this.title = title;
+		
 		// dummy test
 		matrix = new int[4][4];
 		for(int i=0; i<4; ++i) {
@@ -45,6 +48,7 @@ public class Board implements Runnable{
 				matrix[i][j] = 2;
 			}
 		}
+		
 	}
 	
 	private void init() {
