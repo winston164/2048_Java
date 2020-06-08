@@ -1,8 +1,6 @@
 package resources;
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.Graphics;
-import java.awt.image.BufferStrategy;
+import java.awt.*;
+import java.awt.image.*;
 
 public class Board implements Runnable{
 
@@ -21,8 +19,20 @@ public class Board implements Runnable{
     private Color emptyColor = new Color(0xCDC1B4);
     private Color startColor = new Color(0xFFEBCD);
     
+    final Color[] numbers = {
+    	new Color(0xfff4d3), new Color(0xffdac3), 		// 2 	4
+    	new Color(0xe7b08e), new Color(0xe7bf8e),		// 8	16
+        new Color(0xffc4c3), new Color(0xE7948e), 		// 32	64	
+        new Color(0xbe7e56), new Color(0xbe5e56), 		// 128	256
+        new Color(0x9c3931), new Color(0x701710)		// 512	1028
+   };
+    
+   final Color[] text = {
+		new Color(0x701710), new Color(0xFFE4C3)		// dark		light
+   };
+    
     private int[][] matrix;								// get from other file
-	private int gameState = 0;							// state of game by server
+	private int gameState = 1;							// state of game by server
     
 	public Board(String title, int width, int height) {
 		this.width = width;
@@ -32,7 +42,7 @@ public class Board implements Runnable{
 		matrix = new int[4][4];
 		for(int i=0; i<4; ++i) {
 			for(int j=0; j<4; ++j) {
-				matrix[i][j] = 0;
+				matrix[i][j] = 2;
 			}
 		}
 	}
@@ -80,9 +90,24 @@ public class Board implements Runnable{
 			g.fillRoundRect(200, 100, 499, 499, 15, 15);
 			for(int i=0; i<4; ++i) {
 				for(int j=0; j<4; ++j) {
-					if(matrix[i][j] == 0) {
-						g.setColor(emptyColor);
+					g.setColor(emptyColor);
+					g.fillRoundRect(215+j*121, 115+i*121, 106, 106, 7, 7);
+					
+					// set color of tile block
+					int value = matrix[i][j];
+					if(value != 0 & value != 2048) {
+						g.setColor(numbers[(int) (Math.log(value) / Math.log(2) - 1)]);
 						g.fillRoundRect(215+j*121, 115+i*121, 106, 106, 7, 7);
+					
+						String s = String.valueOf(value);
+						g.setColor(value < 128 ? text[0] : text[1]);
+						g.setFont(new Font("SansSerif", Font.BOLD, 52));
+						FontMetrics fm = g.getFontMetrics();
+						int asc = fm.getAscent();
+						int dsc = fm.getDescent();
+						int x = 215+j*121 + (106 - fm.stringWidth(s)) / 2;
+				        int y = 115+i*121 + (asc + (106 - (asc + dsc)) / 2);
+				        g.drawString(s, x, y);
 					}
 				}
 			}
