@@ -113,6 +113,10 @@ public class Board extends JPanel implements Runnable{
 				        int y = 115+i*121 + (asc + (106 - (asc + dsc)) / 2);
 				        g.drawString(s, x, y);
 					}
+					// value is 0
+					else if(value == 2048) {
+						// TODO gameWon();
+					}
 				}
 			}
 		}
