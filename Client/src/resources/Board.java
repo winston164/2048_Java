@@ -27,7 +27,7 @@ public class Board extends JPanel implements Runnable{
 		new Color(0xffc4c3), new Color(0xE7948e), 		// 32	64	
 		new Color(0xbe7e56), new Color(0xbe5e56), 		// 128	256
 		new Color(0x9c3931), new Color(0x701710)		// 512	1028
-   };
+	};
     
 	final Color[] text = {
 		new Color(0x701710), new Color(0xFFE4C3)		// dark		light
