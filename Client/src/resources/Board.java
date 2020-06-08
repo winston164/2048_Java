@@ -108,6 +108,7 @@ public class Board implements Runnable{
 						int x = 215+j*121 + (106 - fm.stringWidth(s)) / 2;
 				        int y = 115+i*121 + (asc + (106 - (asc + dsc)) / 2);
 				        g.drawString(s, x, y);
+				        
 					}
 				}
 			}
