@@ -18,22 +18,22 @@ public class Board extends JPanel implements Runnable{
 	final static int target = 2048;
 	
 	private Color gridColor = new Color(0xBBADA0);
-    private Color emptyColor = new Color(0xCDC1B4);
-    private Color startColor = new Color(0xFFEBCD);
+	private Color emptyColor = new Color(0xCDC1B4);
+	private Color startColor = new Color(0xFFEBCD);
     
-    final Color[] numbers = {
-    	new Color(0xfff4d3), new Color(0xffdac3), 		// 2 	4
-    	new Color(0xe7b08e), new Color(0xe7bf8e),		// 8	16
-        new Color(0xffc4c3), new Color(0xE7948e), 		// 32	64	
-        new Color(0xbe7e56), new Color(0xbe5e56), 		// 128	256
-        new Color(0x9c3931), new Color(0x701710)		// 512	1028
+	final Color[] numbers = {
+		new Color(0xfff4d3), new Color(0xffdac3), 		// 2 	4
+		new Color(0xe7b08e), new Color(0xe7bf8e),		// 8	16
+		new Color(0xffc4c3), new Color(0xE7948e), 		// 32	64	
+		new Color(0xbe7e56), new Color(0xbe5e56), 		// 128	256
+		new Color(0x9c3931), new Color(0x701710)		// 512	1028
    };
     
-   final Color[] text = {
+	final Color[] text = {
 		new Color(0x701710), new Color(0xFFE4C3)		// dark		light
-   };
+	};
     
-    private int[][] matrix;								// get from other file
+	private int[][] matrix;								// get from other file
 	private int gameState = 1;							// state of game by server
     
 	public Board(String title, int width, int height) {
