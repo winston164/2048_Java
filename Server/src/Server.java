@@ -1,5 +1,6 @@
 package src;
 import java.net.*;
+import java.io.*;
 import java.util.LinkedList;
 
 public class Server {
@@ -26,6 +27,7 @@ public class Server {
             // Continuosly accept clients in pairs
             while (running) {
                 Socket connectionSocket = serverSocket.accept();
+                System.out.println("Accepted Client");
                 if(p1 == null){
                     p1 = new ClientHandler(this, connectionSocket);
                     Thread thread = new Thread(p1);
@@ -45,20 +47,22 @@ public class Server {
             serverSocket.close();
 
         } catch (Exception e) {
+           System.out.println("Disconnected with exception: " + e.getMessage());
             stop();
-            System.out.println("Disconnected with exception: " + e.getMessage());
         }
 
     }
 
     public void deleteThread(ClientHandler delete) {
+        System.out.println("Closed Client");
         handlers.remove(delete);
     }
 
     public void stop() {
         // Stop Client Handlers
         while (handlers.size() > 0) {
-            handlers.element().stop();
+            System.out.println("Closing handelers");
+            handlers.remove().stop();
         }
 
         // Set running to false
@@ -66,10 +70,13 @@ public class Server {
         
         try{
         // Close server socket
+        System.out.println("Closing Server Socket");
         serverSocket.close();
         }catch(Exception e){
             e.printStackTrace();
         }
+
+        System.out.println("Closed Server");
     }
 
 }

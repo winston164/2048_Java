@@ -34,7 +34,23 @@ public class Game  {
 				 System.out.println("");
 			 }
 			System.out.println("");
-		 }
+         }
+         
+         String getMatrixString() {
+            String matrixString = "";
+             for(int i=0;i<4;i++)
+              {
+                  for(int j=0;j<4;j++)
+                  {	
+                      int va = 0;
+                      if(tiles[i][j]!=null) {
+                       va= tiles[i][j].getValue();
+                      }
+                      matrixString = matrixString.concat((" "+va+" "));
+                  }
+              }
+              return matrixString;
+          }
 	
 	
 	private boolean move(int countDownFrom, int yIncr, int xIncr) {
