@@ -126,6 +126,31 @@ public class Board extends JPanel implements Runnable{
 		g.dispose();
 	}
 	
+	public void gameWon(int state) {
+		g.setColor(startColor);
+        g.fillRoundRect(215, 115, 469, 469, 7, 7);
+
+        g.setColor(gridColor.darker());
+        g.setFont(new Font("SansSerif", Font.BOLD, 128));
+        g.drawString("2048", 310, 270);
+
+        g.setFont(new Font("SansSerif", Font.BOLD, 20));
+
+        if (state == 1) {
+            g.drawString("WIN", 390, 350);
+
+        } 
+        else if (state == 0) {
+            g.drawString("TIE", 400, 350);
+        }
+        else if (state == -1){
+        	g.drawString("LOSE", 390, 350);
+        }
+        
+
+        g.setColor(gridColor);
+	}
+	
 	public void run() {
 		init();
 		while(running) {
