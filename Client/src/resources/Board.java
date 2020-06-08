@@ -13,9 +13,8 @@ public class Board extends JPanel implements Runnable{
 	
 	public String title;
 	public int width, height;
+	private int win;									// check if game won by server
 	private boolean running = false;
-	
-	final static int target = 2048;
 	
 	private Color gridColor = new Color(0xBBADA0);
 	private Color emptyColor = new Color(0xCDC1B4);
@@ -34,7 +33,7 @@ public class Board extends JPanel implements Runnable{
 	};
     
 	private int[][] matrix;								// get from other file
-	private int gameState = 1;							// state of game by server
+	private int gameState;								// state of game by server
     
 	public Board(String title, int width, int height) {
 		this.width = width;
@@ -45,7 +44,7 @@ public class Board extends JPanel implements Runnable{
 		matrix = new int[4][4];
 		for(int i=0; i<4; ++i) {
 			for(int j=0; j<4; ++j) {
-				matrix[i][j] = 2;
+				matrix[i][j] = 0;
 			}
 		}
 		
@@ -110,12 +109,13 @@ public class Board extends JPanel implements Runnable{
 						int asc = fm.getAscent();
 						int dsc = fm.getDescent();
 						int x = 215+j*121 + (106 - fm.stringWidth(s)) / 2;
-				        int y = 115+i*121 + (asc + (106 - (asc + dsc)) / 2);
-				        g.drawString(s, x, y);
+						int y = 115+i*121 + (asc + (106 - (asc + dsc)) / 2);
+						g.drawString(s, x, y);
 					}
-					// value is 0
+					// value is 2048
 					else if(value == 2048) {
-						// TODO gameWon();
+						win = 1;
+						gameWon(win);
 					}
 				}
 			}
@@ -128,26 +128,21 @@ public class Board extends JPanel implements Runnable{
 	
 	public void gameWon(int state) {
 		g.setColor(startColor);
-        g.fillRoundRect(215, 115, 469, 469, 7, 7);
+		g.fillRoundRect(215, 115, 469, 469, 7, 7);
 
-        g.setColor(gridColor.darker());
-        g.setFont(new Font("SansSerif", Font.BOLD, 128));
-        g.drawString("2048", 310, 270);
+		g.setColor(gridColor.darker());
+		g.setFont(new Font("SansSerif", Font.BOLD, 128));
+		g.drawString("2048", 310, 270);
 
-        g.setFont(new Font("SansSerif", Font.BOLD, 20));
+		g.setFont(new Font("SansSerif", Font.BOLD, 20));
 
-        if (state == 1) {
-            g.drawString("WIN", 390, 350);
-
-        } 
-        else if (state == 0) {
-            g.drawString("TIE", 400, 350);
-        }
-        else if (state == -1){
+		if (state == 1)
+			g.drawString("WIN", 390, 350);
+        else if (state == 0)
+        	g.drawString("TIE", 400, 350);
+        else if (state == -1)
         	g.drawString("LOSE", 390, 350);
-        }
         
-
         g.setColor(gridColor);
 	}
 	
