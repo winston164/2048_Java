@@ -39,6 +39,7 @@ public class Board extends JPanel implements Runnable{
     
 	public Board(String title, Client client) {
 		this.title = title;
+		this.client = client;
 		
 		// dummy test
 		matrix = new int[4][4];
