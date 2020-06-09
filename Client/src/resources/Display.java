@@ -9,12 +9,14 @@ public class Display {
 	private Canvas canvas;
 	private String title;
 	private int width, height;
+	Client client;
 	private int moves;
 	
-	public Display(String title, int width, int height) {
+	public Display(String title, int width, int height, Client client) {
 		this.title = title;
 		this.width = width;
 		this.height = height;
+		this.client = client;
 		createDisplay();
 	}
 	
@@ -43,18 +45,20 @@ public class Display {
 			@Override
 			public void keyPressed(KeyEvent e) {
 				int keyCode = e.getKeyCode();
+				if(client == null)
+					return;
 				switch(keyCode) {
 					case KeyEvent.VK_UP:
-						moves = 0;
+						client.sendinput(0);
 						break;
 					case KeyEvent.VK_DOWN:
-						moves = 1;
+						client.sendinput(1);
 						break;
 					case KeyEvent.VK_LEFT:
-						moves = 2;
+						client.sendinput(2);
 						break;
 					case KeyEvent.VK_RIGHT:
-						moves = 3;
+						client.sendinput(3);
 						break;
 				}
 			}
