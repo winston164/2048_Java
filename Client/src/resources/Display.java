@@ -44,11 +44,9 @@ public class Display {
 
 			@Override
 			public void keyPressed(KeyEvent e) {
-				System.out.println("reach");
 				int keyCode = e.getKeyCode();
 				if(client == null)
 					return;
-				System.out.println(keyCode);
 				switch(keyCode) {
 					case KeyEvent.VK_UP:
 						client.sendinput(0);

@@ -29,7 +29,6 @@ public class Client {
 			String inputString = "";
 			while(!inputString.equals("Winner!") && !inputString.equals("Looser!")){
 				inputString = serverInput.readLine();
-				System.out.println(inputString);
 				switch (inputString) {
 					case "Player1:":
 						p1.setGameState(1);
@@ -89,7 +88,11 @@ public class Client {
 		String[] stringValues = mString.split(" ");
 		for(int i = 0; i < 4; i++){
 			for(int j = 0; j < 4 ; j++){
+				try {
 				value[i][j] = Integer.parseInt(stringValues[4*i + j]);
+				}catch(Exception e) {
+					System.out.println(e.getMessage());
+				}
 			}
 		}
 		return value;
