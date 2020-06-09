@@ -13,8 +13,10 @@ public class ClientHandler implements Runnable{
     private ClientHandler opponent;
     private DataOutputStream clientOutput;
     private BufferedReader clientInput;
+    public boolean hasMoves;
 
     ClientHandler(Server server, Socket webSocket){
+        hasMoves = true;
         running = false;
         this.server = server;
         connectionSocket = webSocket;
@@ -35,6 +37,7 @@ public class ClientHandler implements Runnable{
         String request = "";
         while(running){
             request = clientInput.readLine();
+            System.out.println("From client: " + request);
             if(request == null) break;
             if(request.equals("Connected?")){
                 clientOutput.writeBytes("Connected Sucesfully\n");
@@ -42,6 +45,8 @@ public class ClientHandler implements Runnable{
             if(request.equals("Next Input:")){
                 request = clientInput.readLine();
                 input(Integer.parseInt(request));
+                hasMoves = personalGame.movesAvailable();
+                if(!hasMoves) stock(0);
             }
 
         }
@@ -119,6 +124,65 @@ public class ClientHandler implements Runnable{
         }
     }
 
+    public void stock(int state){
+        System.out.println("Stock");
+        if(state == 0)
+        if(!opponent.hasMoves){
+            
+            //sum to know the winner
+            String p1M = personalGame.getMatrixString();
+            String p2M = opponent.getMatriString();
+
+            String[] p1MSplit = p1M.split(" ");
+            String[] p2MSplit = p2M.split(" ");
+
+            int sumP1 = 0;
+            int sumP2 = 0;
+
+
+            for(int i = 0; i < p1MSplit.length; i++){
+                sumP1 += Integer.parseInt(p1MSplit[i]);
+                sumP2 += Integer.parseInt(p2MSplit[i]);
+            }
+
+            System.out.println(sumP1 + " " + sumP2);
+
+            if(sumP1 > sumP2) {
+                state = 1;
+                opponent.stock(-1);
+            }else if(sumP1 < sumP2){
+                state = -1;
+                opponent.stock(1);
+            }else{
+                state = 2;
+                opponent.stock(2);
+            }
+
+        }
+
+        if(state == 1){
+            try{
+            clientOutput.writeBytes("Winner!\n");
+            }catch(IOException e){
+                System.out.println(e.getMessage());
+            }
+            //stop();
+        }
+        
+        if(state == -1){
+            try{
+                clientOutput.writeBytes("Loser!\n");
+            }catch(IOException e){
+                    System.out.println(e.getMessage());
+            }
+            //stop();
+        }
+
+        if(state == 2){
+            //Tie logic
+        }
+
+    }
     //Stop the game
     public void stop(){
         try {

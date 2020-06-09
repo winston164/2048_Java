@@ -46,7 +46,7 @@ public class Game  {
                       if(tiles[i][j]!=null) {
                        va= tiles[i][j].getValue();
                       }
-                      matrixString = matrixString.concat((" "+va+" "));
+                      matrixString = matrixString.concat((va+" "));
                   }
               }
               return matrixString;
