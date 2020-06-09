@@ -44,7 +44,7 @@ public class Board extends JPanel implements Runnable{
 		matrix = new int[4][4];
 		for(int i=0; i<4; ++i) {
 			for(int j=0; j<4; ++j) {
-				matrix[i][j] = 2;
+				matrix[i][j] = 0;
 			}
 		}
 		

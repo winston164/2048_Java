@@ -64,7 +64,7 @@ public class ClientHandler implements Runnable{
             clientOutput.writeBytes(gameMatrix + "\n");
             opponent.sendOpponentMatrix(gameMatrix);
             if(gameMatrix.contains("2048")){
-                clientOutput.writeBytes("Winner!S\n");
+                clientOutput.writeBytes("Winner!\n");
                 stop();
             }
         }catch(IOException e){
