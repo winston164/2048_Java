@@ -77,7 +77,7 @@ public class Client {
 		if(serverOutput == null) return;
 		try{
 		serverOutput.writeBytes("Next Input:\n");
-		serverOutput.writeBytes(Integer.toString(input));
+		serverOutput.writeBytes(Integer.toString(input) + "\n");
 		}catch(IOException e){
 			System.out.println(e.getMessage());
 		}
