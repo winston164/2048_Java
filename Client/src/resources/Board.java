@@ -10,9 +10,11 @@ public class Board extends JPanel implements Runnable{
 	private Thread thread;
 	private BufferStrategy bs;
 	private Graphics g;
+	Client client;
 	
 	public String title;
-	public int width, height;
+	private final int width = 900;
+	private final int height = 700;
 	private int win;									// check if game won by server
 	private boolean running = false;
 	
@@ -33,25 +35,23 @@ public class Board extends JPanel implements Runnable{
 	};
     
 	private int[][] matrix;								// get from other file
-	private int gameState;								// state of game by server
+	private int gameState = 1;								// state of game by server
     
-	public Board(String title, int width, int height) {
-		this.width = width;
-		this.height = height;
+	public Board(String title, Client client) {
 		this.title = title;
 		
 		// dummy test
 		matrix = new int[4][4];
 		for(int i=0; i<4; ++i) {
 			for(int j=0; j<4; ++j) {
-				matrix[i][j] = 0;
+				matrix[i][j] = 2;
 			}
 		}
 		
 	}
 	
 	private void init() {
-		display = new Display(title, width, height);
+		display = new Display(title, width, height, client);
 	}
 	
 	private void tick() {
@@ -172,5 +172,13 @@ public class Board extends JPanel implements Runnable{
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
+	}
+	
+	public void setMatrix(int[][] matrix) {
+		this.matrix = matrix;
+	}
+	
+	public void setGameState(int input) {
+		gameState = input;
 	}
 }
