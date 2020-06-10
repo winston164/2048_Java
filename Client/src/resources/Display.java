@@ -10,7 +10,6 @@ public class Display {
 	private String title;
 	private int width, height;
 	Client client;
-	private int moves;
 	
 	public Display(String title, int width, int height, Client client) {
 		this.title = title;

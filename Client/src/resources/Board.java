@@ -6,6 +6,8 @@ import javax.swing.JPanel;
 
 public class Board extends JPanel implements Runnable{
 
+	private static final long serialVersionUID = 1L;	// ignore this
+	
 	private Display display;
 	private Thread thread;
 	private BufferStrategy bs;
@@ -35,12 +37,12 @@ public class Board extends JPanel implements Runnable{
 	};
     
 	private int[][] matrix;								// get from other file
-	private int gameState = 1;								// state of game by server
+	private int gameState;								// state of game by server
     
 	public Board(String title, Client client) {
 		this.title = title;
 		this.client = client;
-		
+/*
 		// dummy test
 		matrix = new int[4][4];
 		for(int i=0; i<4; ++i) {
@@ -48,7 +50,7 @@ public class Board extends JPanel implements Runnable{
 				matrix[i][j] = 0;
 			}
 		}
-		
+*/		
 	}
 	
 	private void init() {
@@ -130,7 +132,7 @@ public class Board extends JPanel implements Runnable{
 	public void gameWon(int state) {
 		g.clearRect(0, 0, width, height);
 		g.setColor(startColor);
-		g.fillRoundRect(215, 115, 469, 469, 7, 7);
+		g.fillRoundRect(215, 115, 499, 499, 7, 7);
 
 		g.setColor(gridColor.darker());
 		g.setFont(new Font("SansSerif", Font.BOLD, 128));
@@ -139,14 +141,13 @@ public class Board extends JPanel implements Runnable{
 		g.setFont(new Font("SansSerif", Font.BOLD, 70));
 		
 		if (state == 1) 
-            g.drawString("WIN", 390, 400);       
+			g.drawString("WIN", 390, 400);       
         else if (state == 0) 
-            g.drawString("TIE", 400, 400);
+        	g.drawString("TIE", 400, 400);
         else if (state == -1)
         	g.drawString("LOSE", 360, 400);
-        
-        
-        g.setColor(gridColor);
+
+		g.setColor(gridColor);
 	}
 	
 	public void run() {

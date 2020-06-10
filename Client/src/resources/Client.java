@@ -8,8 +8,6 @@ public class Client {
 	Board p1;
 	Board p2;
 
-
-
 	public Client() {
 		try {
 			//Start the Boards
@@ -29,6 +27,7 @@ public class Client {
 			String inputString = "";
 			while(!inputString.equals("Winner!") && !inputString.equals("Looser!")){
 				inputString = serverInput.readLine();
+				System.out.println(inputString);
 				switch (inputString) {
 					case "Player1:":
 						p1.setGameState(1);
@@ -62,22 +61,18 @@ public class Client {
 			}
 			cSock.close();
 		} catch (UnknownHostException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
-		
 	}
 	
 	public void sendinput(int input) {
 		if(serverOutput == null) return;
-		try{
-		serverOutput.writeBytes("Next Input:\n");
-		serverOutput.writeBytes(Integer.toString(input) + "\n");
-		}catch(IOException e){
+		try {
+			serverOutput.writeBytes("Next Input:\n");
+			serverOutput.writeBytes(Integer.toString(input) + "\n");
+		} catch(IOException e){
 			System.out.println(e.getMessage());
 		}
 		
@@ -89,8 +84,8 @@ public class Client {
 		for(int i = 0; i < 4; i++){
 			for(int j = 0; j < 4 ; j++){
 				try {
-				value[i][j] = Integer.parseInt(stringValues[4*i + j]);
-				}catch(Exception e) {
+					value[i][j] = Integer.parseInt(stringValues[4*i + j]);
+				} catch(Exception e) {
 					System.out.println(e.getMessage());
 				}
 			}
@@ -99,11 +94,11 @@ public class Client {
 	}
 
 	private void finish(){
-		try{
-		serverInput.close();
-		serverOutput.close();
-	}catch(IOException e){
-		System.out.println(e.getMessage());
-	}
+		try {
+			serverInput.close();
+			serverOutput.close();
+		} catch(IOException e) {
+			System.out.println(e.getMessage());
+		}
 	}
 }
