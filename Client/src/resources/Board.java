@@ -142,10 +142,10 @@ public class Board extends JPanel implements Runnable{
 		
 		if (state == 1) 
 			g.drawString("WIN", 390, 400);       
-        else if (state == 0) 
-        	g.drawString("TIE", 400, 400);
-        else if (state == -1)
-        	g.drawString("LOSE", 360, 400);
+		else if (state == 0) 
+			g.drawString("TIE", 400, 400);
+		else if (state == -1)
+			g.drawString("LOSE", 360, 400);
 
 		g.setColor(gridColor);
 	}
