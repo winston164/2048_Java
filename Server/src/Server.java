@@ -30,12 +30,10 @@ public class Server {
                 System.out.println("Accepted Client");
                 if(p1 == null){
                     p1 = new ClientHandler(this, connectionSocket);
-                    Thread thread = new Thread(p1);
-                    thread.start();
+                    p1.start();
                 }else{
                     ClientHandler p2 = new ClientHandler(this, connectionSocket);
-                    Thread thread = new Thread(p2);
-                    thread.start();
+                    p2.start();
                     handlers.add(p1);
                     handlers.add(p2);
                     p1.setOpponent(p2);
@@ -62,7 +60,9 @@ public class Server {
         // Stop Client Handlers
         while (handlers.size() > 0) {
             System.out.println("Closing handelers");
-            handlers.remove().stop();
+            ClientHandler c = handlers.remove();
+            c.interrupt();
+            c.stopHandler();
         }
 
         // Set running to false

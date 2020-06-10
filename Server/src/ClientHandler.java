@@ -4,7 +4,7 @@ import java.net.*;
 
 import java.io.*;
 
-public class ClientHandler implements Runnable{
+public class ClientHandler extends Thread{
 
     private boolean running;
     private Server server;
@@ -48,13 +48,16 @@ public class ClientHandler implements Runnable{
                 hasMoves = personalGame.movesAvailable();
                 if(!hasMoves) stock(0);
             }
+            if(request.equals("Close Connection")){
+                stopHandler();
+            }
 
         }
 
         }catch(IOException e){
             System.out.println("Disconnected with exception: " + e.getMessage());
         }
-        stop();
+        stopHandler();
         System.out.println("Thread " + Thread.currentThread().getName() + " Finished");
     }
 
@@ -70,7 +73,7 @@ public class ClientHandler implements Runnable{
             opponent.sendOpponentMatrix(gameMatrix);
             if(gameMatrix.contains("2048")){
                 clientOutput.writeBytes("Winner!\n");
-                stop();
+                stopHandler();
             }
         }catch(IOException e){
             System.out.println("Disconnected with exception: " + e.getMessage());
@@ -117,7 +120,7 @@ public class ClientHandler implements Runnable{
             clientOutput.writeBytes(opponentMatrix + "\n");
             if(opponentMatrix.contains("2048")){
                 clientOutput.writeBytes("Loser!\n");
-                stop();
+                stopHandler();
             }
         }catch(IOException e){
             System.out.println("Disconnected with exception: " + e.getMessage());
@@ -180,14 +183,19 @@ public class ClientHandler implements Runnable{
 
         if(state == 2){
             //Tie logic
+            try{
+                clientOutput.writeBytes("Tie!\n");
+            }catch(IOException e){
+                    System.out.println(e.getMessage());
+            }
         }
 
     }
     //Stop the game
-    public void stop(){
+    public void stopHandler(){
         try {
             //clientOutput.writeBytes("Stop Game!");
-            
+            clientOutput.writeBytes("Close Connection\n");;
             clientInput.close();
             clientOutput.close();
             connectionSocket.close();
@@ -196,6 +204,7 @@ public class ClientHandler implements Runnable{
         }
         running = false;
         server.deleteThread(this);
+        this.interrupt();
 
 
         System.out.println("Thread " + Thread.currentThread().getName() + " Stopped");
