@@ -42,15 +42,9 @@ public class Board extends JPanel implements Runnable{
 	public Board(String title, Client client) {
 		this.title = title;
 		this.client = client;
-/*
+
 		// dummy test
 		matrix = new int[4][4];
-		for(int i=0; i<4; ++i) {
-			for(int j=0; j<4; ++j) {
-				matrix[i][j] = 0;
-			}
-		}
-*/		
 	}
 	
 	private void init() {
@@ -88,6 +82,16 @@ public class Board extends JPanel implements Runnable{
 			g.setColor(Color.red);
 			g.setFont(new Font("SansSerif", Font.BOLD, 52));
 			g.drawString("Waiting...", 340, 610);
+		}
+		// Game Won
+		else if(gameState == 1){
+			gameWon(1);
+		}
+		else if(gameState == 2){
+			gameWon(-1);
+		}
+		else if(gameState == 3){
+			gameWon(0);
 		}
 		// Player connected
 		else {
@@ -140,12 +144,15 @@ public class Board extends JPanel implements Runnable{
 
 		g.setFont(new Font("SansSerif", Font.BOLD, 70));
 		
-		if (state == 1) 
-			g.drawString("WIN", 390, 400);       
-		else if (state == 0) 
-			g.drawString("TIE", 400, 400);
-		else if (state == -1)
-			g.drawString("LOSE", 360, 400);
+		if (state == 1){ 
+			g.setColor(new Color(0x4FE878));
+			g.drawString("WIN", 390, 400);}       
+		else if (state == 0){ 
+			g.setColor(startColor);
+			g.drawString("TIE", 400, 400);}
+		else if (state == -1){
+			g.setColor(new Color(0xFF4D4D));
+			g.drawString("LOSE", 360, 400);}
 
 		g.setColor(gridColor);
 	}
@@ -154,6 +161,11 @@ public class Board extends JPanel implements Runnable{
 		init();
 		while(running) {
 			tick();
+			try{
+			Thread.sleep(10);
+			}catch(Exception e){
+				e.printStackTrace();
+			}
 			render();
 		}
 		stop();

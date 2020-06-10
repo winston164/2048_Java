@@ -11,8 +11,8 @@ public class Client {
 	public Client() {
 		try {
 			//Start the Boards
-			p1 = new Board("Player 1", this);
-			p2 = new Board("Player 2", null);
+			p1 = new Board("Your Game", this);
+			p2 = new Board("Opponent's Game", null);
 			p1.setGameState(0);
 			p2.setGameState(0);
 			p1.start();
@@ -20,17 +20,17 @@ public class Client {
 
 
 			//make connection with the server
-			Socket cSock = new Socket("192.168.43.15", 8080);
+			Socket cSock = new Socket("192.168.0.113", 8080);
 			serverInput = new BufferedReader(new InputStreamReader(cSock.getInputStream()));
 			serverOutput = new DataOutputStream(cSock.getOutputStream());
 			
 			String inputString = "";
 			while(!inputString.equals("Winner!") && !inputString.equals("Looser!")){
 				inputString = serverInput.readLine();
-				System.out.println(inputString);
+				//System.out.println(inputString);
 				switch (inputString) {
 					case "Player1:":
-						p1.setGameState(1);
+						p1.setGameState(4);
 						String p1Matrix = serverInput.readLine();
 
 						p1.setMatrix(parseMatrix(p1Matrix));
@@ -38,21 +38,35 @@ public class Client {
 						
 					case "Winner!":
 						//set p1 as winner and finish
-						p1.gameWon(1);
-						p2.gameWon(-1);
+						p1.setGameState(1);
+						p2.setGameState(2);
 						finish();
 						break;
 
 					case "Player2:":
-						p2.setGameState(1);
+						p2.setGameState(4);
 						String p2Matrix = serverInput.readLine();
 						p2.setMatrix(parseMatrix(p2Matrix));
 						break;
 					
-					case "Looser!":
+					case "Loser!":
 						//set p1 as looser and finish
-						p1.gameWon(-1);
-						p2.gameWon(1);
+						p1.setGameState(2);
+						p2.setGameState(1);
+						finish();
+						break;
+
+					case "Tie!":
+						//set p1 as looser and finish
+						p1.setGameState(3);
+						p2.setGameState(3);
+						finish();
+						break;
+
+					case "Close Connection":
+						//set p1 as looser and finish
+						p1.setGameState(0);
+						p2.setGameState(0);
 						finish();
 						break;
 					default:
@@ -95,6 +109,7 @@ public class Client {
 
 	private void finish(){
 		try {
+			serverOutput.writeBytes("Close Connection\n");
 			serverInput.close();
 			serverOutput.close();
 		} catch(IOException e) {
